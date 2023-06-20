@@ -1,0 +1,14 @@
+GET http://localhost:5050/users
+
+#######
+
+POST http://localhost:5050/users/new HTTP/1.1
+Content-Type: application/json
+
+{
+    "userName": "adminTest01",
+    "email": "email@test02.it",
+    "password": "test0102"
+}
+
+#######
