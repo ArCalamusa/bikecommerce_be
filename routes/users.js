@@ -66,4 +66,25 @@ router.patch('/users/:id', async (req, res) => {
     }
 })
 
-export default router
+/* DELETE */
+router.delete('/users/delete/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await UsersModel.findById(id).deleteOne();
+        if (!user) {
+            return res.status(484).send({
+                message: 'There is no User with this Id'
+            })
+        }
+        res.status(208).send({
+            message: "User deleted from the db"
+        })
+    } catch (error) {
+        res.status(500).send({
+            message: "Internal server error"
+        })
+    }
+})
+
+export default router;

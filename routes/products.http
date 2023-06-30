@@ -1,0 +1,17 @@
+GET http://localhost:5050/products
+
+#######
+
+POST http://localhost:5050/products/new HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "bici16",
+    "oldPrice": "70",
+    "price": 65,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla non magni facili blanditiis molestias soluta eveniet illum accusantium eius mollitia eligendi, ex iste doloribus magnam.",
+    "category": "gravel",
+    "rating": 3
+}
+
+#######
