@@ -14,7 +14,10 @@ router.post('/login', async (req, res) => {
             message: "User not found"
         })
     }
-    res.status(200).send(user)
+    res.status(200).send({
+        userName: user.userName,
+        email: user.email
+    })
 })
 
 export default router

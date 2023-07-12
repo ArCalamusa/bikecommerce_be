@@ -17,20 +17,15 @@ router.get('/users', async (req, res) => {
 
 /* POST */
 router.post('/users/new', async (req, res) => {
+    console.log(req.body)
     const user = new UsersModel({
         userName: req.body.userName,
         email: req.body.email,
         password: req.body.password,
-        role: req.body.role
     })
     try {
         //controllo sull'utente per evitare duplicati
-        const userExist = await UsersModel.findOne({ email: req.body.email })
-        if (userExist) {
-            return res.status(409).send({
-                message: "Email already exists"
-            })
-        }
+
         const newUser = await user.save()
         res.status(201).send({
             message: "Registered user"

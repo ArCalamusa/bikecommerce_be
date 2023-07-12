@@ -2,13 +2,17 @@ GET http://localhost:5050/users
 
 #######
 POST http://localhost:5050/users/new HTTP/1.1
-Content-Type: application/json
+content-type: application/json
+
+#######
+
+POST http://localhost:5050/users/new HTTP/1.1
+content-type: application/json
 
 {
-    "userName": "test02",
-    "email": "email@test02.it",
-    "password": "test02",
-    "role": "user"
+    "userName": "test",
+    "email": "test@test.it",
+    "password": "test01"
 }
 
 #######
@@ -25,7 +29,7 @@ Content-Type: application/json
 DELETE http://localhost:5050/users/delete/649ec014671af30814869334
 
 #######
-POST http://localhost:5050/users/login HTTP/1.1
+POST http://localhost:5050/login HTTP/1.1
 Content-Type: application/json
 
 {

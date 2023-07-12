@@ -5,8 +5,6 @@ import loginRoute from './routes/login.js';
 import productsRoute from './routes/products.js'
 import cors from 'cors';
 import dotenv from 'dotenv';
-//import Stripe from 'stripe';
-import bodyParser from "body-parser";
 
 dotenv.config()
 
@@ -18,22 +16,8 @@ const PORT = process.env.PORT;
 const app = express();
 
 /* middleware per poter leggere il body in formato json */
-app.use(express.json());
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-/* STRIPE */
-app.post("/pay", async (req, res) => {
-    console.log(req.body.token);
-    await Stripe.charges.create({
-        source: req.body.token.id,
-        amount: req.body.amount,
-        currency: "usd",
-    });
-});
-
 app.use(cors());
+app.use(express.json())
 
 app.use('/', usersRoute)
 app.use('/', loginRoute)
