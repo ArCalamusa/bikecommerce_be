@@ -29,8 +29,10 @@ router.post('/login', async (req, res) => {
     })
 
     res.header('auth', token).status(200).send({
+        message: "login effettuato con successo",
+        statusCode: 200,
         token
     })
 })
 
-export default router
+export default router;
