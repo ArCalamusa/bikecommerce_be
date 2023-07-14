@@ -1,10 +1,14 @@
 import express from 'express';
 import UsersModel from '../models/users.js';
+import bcrypt from 'bcrypt';
+import cacheMiddleware from '../middleware/cacheMiddleware.js';
+import validateUser from '../middleware/validateUser.js';
+import logger from '../middleware/logger.js';
 
 const router = express.Router()
 
 /* GET */
-router.get('/users', async (req, res) => {
+router.get('/users', [cacheMiddleware, logger], async (req, res) => {
     try {
         const users = await UsersModel.find()
         res.status(200).send(users)
@@ -16,15 +20,24 @@ router.get('/users', async (req, res) => {
 })
 
 /* POST */
-router.post('/users/new', async (req, res) => {
-    console.log(req.body)
+router.post('/users/new', validateUser, async (req, res) => {
+
+    const genSalt = await bcrypt.genSalt(10)
+    const hashPW = await bcrypt.hash(req.body.password, genSalt)
+
     const user = new UsersModel({
         userName: req.body.userName,
         email: req.body.email,
-        password: req.body.password,
+        password: hashPW,
     })
     try {
-        //controllo sull'utente per evitare duplicati
+        const userExist = await UsersModel.findOne({ email: req.body.email })
+        if (userExist) {
+            return res.status(409).send({
+                message: "Email già esistente",
+                stausCode: 409
+            })
+        }
 
         const newUser = await user.save()
         res.status(201).send({
